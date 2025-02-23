@@ -23,13 +23,13 @@ app.get("/user", async (req,res) =>{
     const userLastname = req.body.lastName;
     try{
 
-       const user = await User.find({lastName: userLastname});
-       if(user.length === 0){
+       const users = await User.find({lastName: userLastname});
+       if(users.length === 0){
            res.status(404).send("user not found")
        }else{
-        res.send(user);
+        res.send(users);
        }
-    }catch (err){
+    }catch (err) {
 
         res.status(400).send("Something went wrong...!");
 
@@ -37,8 +37,17 @@ app.get("/user", async (req,res) =>{
 });
 
 //feed API - GET/feed - get all the users from the database
-app.get("/feed",(req,res) => {
+app.get("/feed",async (req,res) => {
+    try{
 
+        const users = await User.find({});
+        res.send(users);
+
+    } catch (err) {
+        
+        res.status(400).send("Something went wrong...!");
+        
+    }
 }) 
 
 connectDB()
