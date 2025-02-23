@@ -24,8 +24,11 @@ app.get("/user", async (req,res) =>{
     try{
 
        const user = await User.find({lastName: userLastname});
-       res.send(user);
-
+       if(user.length === 0){
+           res.status(404).send("user not found")
+       }else{
+        res.send(user);
+       }
     }catch (err){
 
         res.status(400).send("Something went wrong...!");
