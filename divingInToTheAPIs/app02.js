@@ -18,6 +18,26 @@ app.post("/signup",async (req,res) =>{
      }; 
 }); 
 
+//GET user by lastName
+app.get("/user", async (req,res) =>{
+    const userLastname = req.body.lastName;
+    try{
+
+       const user = await User.find({lastName: userLastname});
+       res.send(user);
+
+    }catch (err){
+
+        res.status(400).send("Something went wrong...!");
+
+    }
+});
+
+//feed API - GET/feed - get all the users from the database
+app.get("/feed",(req,res) => {
+
+}) 
+
 connectDB()
   .then(() =>{
      console.log("Database connection established...!");
